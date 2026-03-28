@@ -194,7 +194,7 @@ function toStoredImpactEventRow(
   options: UpsertImpactEventsOptions = {},
 ): StoredImpactEventRow {
   if (!isImpactEvent(event)) {
-    throw new Error(`Invalid ImpactEvent payload for slug "${event?.slug ?? "unknown"}".`);
+    throw new Error(`Invalid ImpactEvent payload for slug "${(event as Record<string, unknown>)?.slug ?? "unknown"}".`);
   }
 
   return {
