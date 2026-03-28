@@ -9,15 +9,22 @@ export function ThemeToggle() {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
+  const label =
+    resolvedTheme === "dark"
+      ? "Switch to light mode"
+      : resolvedTheme === "light"
+        ? "Switch to dark mode"
+        : "Switch color theme";
+
   return (
     <button
       type="button"
       onClick={handleToggle}
-      aria-label="Toggle theme"
-      title="Toggle theme"
+      aria-label={label}
+      title={label}
       className="filter-chip rounded-full p-2 transition hover:-translate-y-px"
     >
-      <span className="sr-only">Toggle theme</span>
+      <span className="sr-only">{label}</span>
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"

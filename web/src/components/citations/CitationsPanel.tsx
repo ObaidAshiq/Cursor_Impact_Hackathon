@@ -42,6 +42,9 @@ export function CitationsPanel({ citations }: Props) {
             className="mt-1 block font-medium text-zinc-900 underline-offset-2 hover:underline dark:text-zinc-50"
           >
             {c.title}
+            <span className="ml-1 text-xs font-normal text-zinc-500 no-underline dark:text-zinc-400">
+              (opens in new tab)
+            </span>
           </a>
           <p className="mt-0.5 text-xs text-zinc-600 dark:text-zinc-400">
             {c.publisher}

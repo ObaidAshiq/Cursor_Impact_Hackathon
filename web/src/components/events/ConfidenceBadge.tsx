@@ -1,10 +1,18 @@
 import type { ConfidenceLevel } from "@/lib/domain";
 
-const labels: Record<ConfidenceLevel, string> = {
+const confidenceLabels: Record<ConfidenceLevel, string> = {
   high: "High confidence",
   medium: "Medium confidence",
   low: "Low confidence",
   insufficient: "Insufficient evidence",
+};
+
+/** Short text shown next to category labels (Guidance, Facts, …) so level is not color-only. */
+const shortLevel: Record<ConfidenceLevel, string> = {
+  high: "High",
+  medium: "Medium",
+  low: "Low",
+  insufficient: "Unclear",
 };
 
 const styles: Record<ConfidenceLevel, string> = {
@@ -22,11 +30,24 @@ type Props = {
 };
 
 export function ConfidenceBadge({ level, label }: Props) {
+  const full = confidenceLabels[level];
+  const content = label ? (
+    <>
+      <span>{label}</span>
+      <span className="mx-1 opacity-50" aria-hidden="true">
+        ·
+      </span>
+      <span className="font-normal">{shortLevel[level]}</span>
+    </>
+  ) : (
+    full
+  );
+
   return (
     <span
       className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${styles[level]}`}
     >
-      {label ?? labels[level]}
+      {content}
     </span>
   );
 }

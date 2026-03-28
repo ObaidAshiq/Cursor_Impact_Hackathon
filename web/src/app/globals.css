@@ -81,10 +81,32 @@
   }
 }
 
+@keyframes hero-section-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateX(-12px) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes fade-up-card {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -92,14 +114,24 @@
   }
 }
 
-@keyframes fade-up-card {
+@keyframes fade-up-card-quick {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes feed-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
   }
 }
 
@@ -130,20 +162,24 @@
   animation: mesh-drift-c 24s ease-in-out infinite;
 }
 
+.hero-section-reveal {
+  animation: hero-section-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .hero-fade {
-  animation: fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .hero-fade-delay-1 {
-  animation-delay: 0.1s;
+  animation-delay: 0.12s;
 }
 
 .hero-fade-delay-2 {
-  animation-delay: 0.18s;
+  animation-delay: 0.22s;
 }
 
 .hero-fade-delay-3 {
-  animation-delay: 0.26s;
+  animation-delay: 0.32s;
 }
 
 .filter-chip {
@@ -176,11 +212,98 @@
 }
 
 .event-card-enter {
-  animation: fade-up-card 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fade-up-card 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.event-card-enter-quick {
+  animation: fade-up-card-quick 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.feed-load-skeleton {
+  animation: feed-skeleton-pulse 1.1s ease-in-out infinite;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Skip link: visually hidden until keyboard focus */
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  border-radius: 0.5rem;
+  background: var(--foreground);
+  color: var(--background);
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 0.2);
+  outline: 2px solid var(--background);
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
+.skip-link:focus:hover {
+  opacity: 0.92;
+}
+
+/* Visible focus rings (keyboard) */
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+:where(a, button):focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .mesh-orb-a,
+  .mesh-orb-b,
+  .mesh-orb-c {
+    animation: none !important;
+  }
+
+  .hero-section-reveal,
+  .hero-fade,
+  .hero-fade-delay-1,
+  .hero-fade-delay-2,
+  .hero-fade-delay-3,
+  .event-card-enter,
+  .event-card-enter-quick {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .feed-load-skeleton {
+    animation: none !important;
+    opacity: 0.55 !important;
+  }
 }

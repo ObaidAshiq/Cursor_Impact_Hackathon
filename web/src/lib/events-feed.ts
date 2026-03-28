@@ -6,6 +6,7 @@ import {
   listEvents,
   localBlurbForRegion,
 } from "@/lib/events";
+import { FEED_PAGE_MAX } from "@/lib/feed-constants";
 import { buildUserNeedsFromEvents, resolveUserNeedFromEvent } from "@/lib/user-needs";
 import { fetchReliefWebReportById } from "@/lib/sources/reliefweb-client";
 import { fetchEiaBrentSpotDaily, isEiaConfigured } from "@/lib/sources/eia-client";
@@ -102,7 +103,9 @@ export async function listEventsForFeed(
   return loadFeedEvents(filters);
 }
 
-export async function listUserNeedsForFeed(
+export { FEED_PAGE_MAX, FEED_PAGE_SIZE } from "@/lib/feed-constants";
+
+async function buildFullUserNeedFeed(
   filters: EventListFilters & { region?: string } = {},
 ): Promise<UserNeedFeedResult> {
   const { events, apifyError, liveFetchedAt, eiaError, geminiError } =
@@ -114,6 +117,37 @@ export async function listUserNeedsForFeed(
     liveFetchedAt,
     eiaError,
     geminiError,
+  };
+}
+
+export async function listUserNeedsForFeed(
+  filters: EventListFilters & { region?: string } = {},
+): Promise<UserNeedFeedResult> {
+  return buildFullUserNeedFeed(filters);
+}
+
+export async function listUserNeedsForFeedPage(
+  filters: EventListFilters & { region?: string } = {},
+  page: { offset: number; limit: number },
+): Promise<
+  UserNeedFeedResult & {
+    total: number;
+    hasMore: boolean;
+  }
+> {
+  const base = await buildFullUserNeedFeed(filters);
+  const total = base.needs.length;
+  const safeOffset = Math.max(0, Math.floor(page.offset));
+  const safeLimit = Math.min(
+    Math.max(1, Math.floor(page.limit)),
+    FEED_PAGE_MAX,
+  );
+  const needs = base.needs.slice(safeOffset, safeOffset + safeLimit);
+  return {
+    ...base,
+    needs,
+    total,
+    hasMore: safeOffset + needs.length < total,
   };
 }
 

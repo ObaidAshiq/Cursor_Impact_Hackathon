@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CitationsPanel } from "@/components/citations/CitationsPanel";
@@ -35,6 +36,21 @@ function parsePersona(value: string | undefined): Persona | undefined {
     return value as Persona;
   }
   return undefined;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const resolved = await getUserNeedBySlugResolved(slug, {});
+  if (!resolved) {
+    return { title: "Event" };
+  }
+  const raw = resolved.need.summary.trim();
+  const description =
+    raw.length > 155 ? `${raw.slice(0, 155)}…` : raw || undefined;
+  return {
+    title: resolved.need.title,
+    ...(description ? { description } : {}),
+  };
 }
 
 export default async function EventPage({ params, searchParams }: Props) {
@@ -144,6 +160,7 @@ export default async function EventPage({ params, searchParams }: Props) {
                 <Link
                   key={item.id}
                   href={href}
+                  aria-current={active ? "page" : undefined}
                   className={`rounded-full px-3 py-1.5 text-xs font-medium ${
                     active
                       ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"

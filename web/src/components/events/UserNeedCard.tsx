@@ -14,9 +14,16 @@ type Props = {
   need: UserNeedCardModel;
   query?: string;
   enterIndex?: number;
+  /** Shorter motion for infinite-scroll appends (avoids long stagger). */
+  quickEnter?: boolean;
 };
 
-export function UserNeedCard({ need, query = "", enterIndex }: Props) {
+export function UserNeedCard({
+  need,
+  query = "",
+  enterIndex,
+  quickEnter = false,
+}: Props) {
   const params = new URLSearchParams(query);
   params.set("persona", need.persona);
   const nextQuery = params.toString();
@@ -24,12 +31,17 @@ export function UserNeedCard({ need, query = "", enterIndex }: Props) {
     ? `/event/${need.sourceEventSlug}?${nextQuery}`
     : `/event/${need.sourceEventSlug}`;
 
+  const enterClass = quickEnter ? "event-card-enter-quick" : "event-card-enter";
+  const staggerCap = 10;
+  const delayIndex =
+    !quickEnter && enterIndex != null ? Math.min(enterIndex, staggerCap) : null;
+
   return (
     <article
-      className="event-card-enter rounded-2xl border border-zinc-200/90 bg-white/90 p-5 shadow-sm backdrop-blur-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800/90 dark:bg-zinc-950/80 dark:hover:border-zinc-600/90"
+      className={`${enterClass} rounded-2xl border border-zinc-200/90 bg-white/90 p-5 shadow-sm backdrop-blur-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800/90 dark:bg-zinc-950/80 dark:hover:border-zinc-600/90`}
       style={
-        enterIndex != null
-          ? { animationDelay: `${enterIndex * 48}ms` }
+        delayIndex != null
+          ? { animationDelay: `${delayIndex * 48}ms` }
           : undefined
       }
     >
@@ -50,6 +62,7 @@ export function UserNeedCard({ need, query = "", enterIndex }: Props) {
 
       <h2 className="mt-3 text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
         <Link href={href} className="hover:underline">
+
           {need.title}
         </Link>
       </h2>

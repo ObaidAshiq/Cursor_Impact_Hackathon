@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { ProfileForm } from "@/app/profile/ProfileForm";
+
+export const metadata: Metadata = {
+  title: "Your profile",
+  description:
+    "Choose a persona and region to tailor local notes and actions on the feed.",
+};
 
 export default function ProfilePage() {
   return (

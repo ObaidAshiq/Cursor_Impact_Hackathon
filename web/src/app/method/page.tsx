@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Method",
+  description:
+    "How Impact Intelligence separates facts from inference and applies confidence labels.",
+};
+
 export default function MethodPage() {
   return (
     <div className="flex flex-col gap-6">

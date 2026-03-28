@@ -1,60 +1,51 @@
-import { UserNeedCard } from "@/components/events/UserNeedCard";
+import type { Metadata } from "next";
+import { NeedFeedInfinite } from "@/components/events/NeedFeedInfinite";
 import { FeedFilters } from "@/components/events/FeedFilters";
 import { AmbientMesh } from "@/components/layout/AmbientMesh";
-import { listUserNeedsForFeed } from "@/lib/events-feed";
-import type { EventCategory, Persona } from "@/lib/domain";
-
-const categoryValues: (EventCategory | "all")[] = [
-  "all",
-  "energy_fuel",
-  "food_supply_chain",
-  "economic_policy",
-];
-
-const personaValues: (Persona | "all")[] = [
-  "all",
-  "commuter",
-  "student",
-  "small_business_owner",
-  "farmer",
-  "importer",
-];
-
-function parseCategory(value: string | undefined): EventCategory | "all" {
-  if (!value) return "all";
-  return categoryValues.includes(value as EventCategory | "all")
-    ? (value as EventCategory | "all")
-    : "all";
-}
-
-function parsePersona(value: string | undefined): Persona | "all" {
-  if (!value) return "all";
-  return personaValues.includes(value as Persona | "all")
-    ? (value as Persona | "all")
-    : "all";
-}
+import { FEED_PAGE_SIZE } from "@/lib/feed-constants";
+import { listUserNeedsForFeedPage } from "@/lib/events-feed";
+import {
+  parseFeedCategory,
+  parseFeedPersona,
+  parseFeedRegion,
+} from "@/lib/feed-search-params";
 
 type Props = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
+export const metadata: Metadata = {
+  title: { absolute: "Impact Intelligence" },
+};
+
 export default async function Home({ searchParams }: Props) {
   const sp = (await searchParams) ?? {};
-  const category = parseCategory(
+  const category = parseFeedCategory(
     typeof sp.category === "string" ? sp.category : undefined,
   );
-  const persona = parsePersona(
+  const persona = parseFeedPersona(
     typeof sp.persona === "string" ? sp.persona : undefined,
   );
-  const region =
-    typeof sp.region === "string" ? sp.region.toLowerCase() : "";
+  const region = parseFeedRegion(
+    typeof sp.region === "string" ? sp.region : undefined,
+  );
 
-  const { needs, apifyError, liveFetchedAt, eiaError, geminiError } =
-    await listUserNeedsForFeed({
+  const {
+    needs,
+    total,
+    hasMore,
+    apifyError,
+    liveFetchedAt,
+    eiaError,
+    geminiError,
+  } = await listUserNeedsForFeedPage(
+    {
       category,
       persona,
-      region,
-    });
+      region: region || undefined,
+    },
+    { offset: 0, limit: FEED_PAGE_SIZE },
+  );
 
   const listQuery = new URLSearchParams();
   if (category !== "all") listQuery.set("category", category);
@@ -64,10 +55,10 @@ export default async function Home({ searchParams }: Props) {
 
   return (
     <div className="flex flex-col gap-12">
-      <section className="relative overflow-hidden rounded-4xl border border-zinc-200/80 bg-zinc-50/50 px-5 py-9 sm:px-8 sm:py-11 dark:border-zinc-800/80 dark:bg-zinc-950/50">
+      <section className="hero-section-reveal relative overflow-hidden rounded-4xl border border-zinc-200/80 bg-zinc-50/50 px-5 py-9 sm:px-8 sm:py-11 dark:border-zinc-800/80 dark:bg-zinc-950/50">
         <AmbientMesh />
         <div className="relative z-10 flex flex-col gap-5">
-          <p className="hero-fade text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400">
+          <p className="hero-fade text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-600 dark:text-zinc-400">
             Live feed
           </p>
           <h1 className="hero-fade hero-fade-delay-1 text-balance text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
@@ -126,22 +117,20 @@ export default async function Home({ searchParams }: Props) {
 
       <FeedFilters category={category} persona={persona} region={region} />
 
-      {needs.length === 0 ? (
+      {total === 0 ? (
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           No user needs match these filters. Try another persona or broaden the category.
         </p>
       ) : (
-        <ul className="flex flex-col gap-4">
-          {needs.map((need, i) => (
-            <li key={need.id}>
-              <UserNeedCard
-                need={need}
-                query={listQueryString}
-                enterIndex={i}
-              />
-            </li>
-          ))}
-        </ul>
+        <NeedFeedInfinite
+          initialNeeds={needs}
+          initialHasMore={hasMore}
+          listQueryString={listQueryString}
+          category={category}
+          persona={persona}
+          region={region}
+          pageSize={FEED_PAGE_SIZE}
+        />
       )}
     </div>
   );
