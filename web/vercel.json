@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/sync-apify-news",
+      "schedule": "0 5 * * *"
+    }
+  ]
+}
