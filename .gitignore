@@ -1,8 +1,20 @@
-# Local Cursor MCP config may contain API tokens — never commit
+# Secrets — never commit env files (web/.gitignore whitelists .env.example)
+.env*
+
+# Local Cursor MCP config may contain API tokens
 .cursor/mcp.json
 
-# Dependencies (install locally; do not commit)
+# Dependencies
 node_modules/
 
 # Cursor project skills / local IDE files
 web/.cursor/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor backups
+*.swp
+*.swo
+*~
