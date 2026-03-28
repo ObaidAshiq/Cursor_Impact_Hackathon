@@ -1,0 +1,19 @@
+---
+description: Require evidence, confidence, and fact inference separation
+globs: {app,src/app,lib,src/lib}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Trust, Citations, And Confidence
+
+- Cite sources for meaningful claims, especially geopolitical, economic, and policy claims.
+- Distinguish clearly between:
+  - confirmed facts from sources
+  - model inference about likely downstream effects
+  - user-facing recommendations
+- Expose a confidence signal whenever the system summarizes uncertain impact.
+- Prefer "what we know" and "what we infer" labels over blended narrative.
+- Do not present speculation as fact.
+- When evidence is weak or conflicting, say so plainly.
+- Favor multiple reputable sources for major-impact events.
+- Avoid panic-inducing wording, unsupported urgency, or exaggerated certainty.

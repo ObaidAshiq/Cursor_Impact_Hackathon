@@ -1,0 +1,15 @@
+---
+description: MongoDB guidance for production and development use
+globs: {app/api,src/app/api,lib,src/lib,models,src/models}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# MongoDB Guidance
+
+- Use MongoDB Atlas as the default production deployment target.
+- Local MongoDB is allowed for development and experimentation.
+- Centralize connection management and reuse connections safely.
+- Keep schema and collection design aligned with core domain entities such as events, sources, locations, personas, and impact assessments.
+- Avoid scattering database calls across unrelated UI files.
+- Put data access logic behind shared server utilities or repository-style modules.
+- Design documents for traceability so facts, sources, and inferred impacts can be audited.

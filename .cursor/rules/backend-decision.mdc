@@ -1,0 +1,15 @@
+---
+description: Keep backend choice flexible between Convex and MongoDB
+globs: {app,src/app,lib,src/lib}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Backend Decision
+
+- Both `Convex` and `MongoDB` are allowed at this stage.
+- Do not over-couple the app to one backend until the product workflow is clearer.
+- Choose `Convex` when realtime sync, reactive queries, or rapid full-stack iteration are the main need.
+- Choose `MongoDB` when document-centric storage, flexible ingestion pipelines, and broader ecosystem control matter more.
+- Keep domain models and business logic portable so backend changes stay possible.
+- Centralize backend access behind clear server or data-layer boundaries.
+- Revisit the backend decision once the ingestion pipeline and user interaction patterns are better defined.

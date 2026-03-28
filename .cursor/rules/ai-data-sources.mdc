@@ -1,0 +1,16 @@
+---
+description: Approved AI search and ingestion tools with source discipline
+globs: {app,src/app,lib,src/lib}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# AI And Data Sources
+
+- `OpenAI` is allowed for reasoning, synthesis, and recommendation generation.
+- `Exa` is allowed for search and source gathering.
+- `Apify` is allowed for ingestion or scraping only where source terms and legality permit it.
+- Prefer architectures where raw source data, extracted facts, and model-generated reasoning are separable.
+- Store enough metadata to trace outputs back to supporting sources.
+- Do not let the model invent missing evidence for impactful claims.
+- Favor deterministic extraction or validation steps when reliability matters.
+- Keep prompts and pipelines aligned with the trust, citation, and confidence rules.

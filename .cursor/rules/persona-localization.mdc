@@ -1,0 +1,20 @@
+---
+description: Structure outputs by country city persona severity and actions
+globs: {app,src/app,components,src/components,lib,src/lib}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Persona Localization
+
+- Tailor outputs to country, city or region, and user persona whenever context is available.
+- For each impact view, prefer this structure:
+  - event summary
+  - country impact
+  - local or city impact
+  - who is most affected
+  - severity
+  - time horizon
+  - recommended actions
+- Personas should reflect real user contexts such as commuter, student, farmer, importer, or small business owner.
+- Recommendations should adapt to the selected persona instead of staying generic.
+- If local precision is weak, fall back gracefully to regional or country-level guidance.

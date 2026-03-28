@@ -1,0 +1,16 @@
+---
+description: Next.js 16 App Router conventions for this project
+globs: {app,src/app}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Next.js App Router
+
+- Use App Router conventions throughout the project.
+- Prefer Server Components by default.
+- Add `"use client"` only when browser APIs, client state, or client-only libraries are required.
+- Keep data fetching close to the route or server boundary when possible.
+- Use route groups and nested layouts to keep the information architecture clean.
+- Keep API route handlers focused and avoid mixing UI concerns into them.
+- Put shared server utilities in `lib` or `src/lib`, not inside page files.
+- Prefer streaming-friendly and cache-aware patterns when they improve responsiveness without hiding freshness tradeoffs.

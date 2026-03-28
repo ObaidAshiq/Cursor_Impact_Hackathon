@@ -1,0 +1,16 @@
+---
+description: Product principles for local impact intelligence
+globs: app/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Product Impact Principles
+
+- Build a decision-support product, not a headline summarizer.
+- Translate global events into country, city, and persona-level consequences.
+- Prioritize underserved users and people with limited time, context, or expertise.
+- Every important screen should help answer: what happened, why it matters, who is affected, how soon, and what to do next.
+- Recommendations must be practical, conservative, and framed as guidance rather than certainty.
+- Prefer useful local relevance over broad but shallow coverage.
+- Make severity and time horizon explicit when presenting likely downstream effects.
+- Avoid shipping features that increase drama but reduce trust.

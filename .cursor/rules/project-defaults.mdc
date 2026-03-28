@@ -1,0 +1,17 @@
+---
+description: Core defaults for the impact intelligence project
+alwaysApply: true
+---
+
+# Project Defaults
+
+- Build for clarity, trust, and practical usefulness over novelty.
+- Prefer the simplest architecture that supports the current MVP.
+- Document assumptions when requirements, data quality, or impact logic are uncertain.
+- Ask before locking major infrastructure choices that are still intentionally open.
+- Keep product, data, and UI boundaries clear so the app can evolve safely.
+- Optimize for maintainability and demo reliability in a hackathon setting.
+- Do not add major dependencies unless they solve a clear problem for this product.
+- Favor readable implementations over clever abstractions.
+- When presenting impact guidance, be conservative and avoid alarmist wording.
+- Treat citations, confidence, and fact-vs-inference separation as first-class concerns.

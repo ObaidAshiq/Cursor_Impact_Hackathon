@@ -1,0 +1,16 @@
+---
+description: Maintainable structure and code quality defaults
+globs: **/*.{ts,tsx,js,jsx}
+alwaysApply: false
+---
+
+# Quality And Structure
+
+- Keep modules small, focused, and easy to reason about.
+- Separate UI rendering, domain logic, data access, and ingestion concerns.
+- Prefer composition over deep shared abstractions.
+- Use folder structure that reflects product areas and technical boundaries clearly.
+- Make high-impact logic easy to test and inspect.
+- Avoid hidden side effects in transformation or reasoning code.
+- Favor explicit data flow over magical conventions.
+- When in doubt, choose the structure that makes trust-sensitive behavior easiest to audit.

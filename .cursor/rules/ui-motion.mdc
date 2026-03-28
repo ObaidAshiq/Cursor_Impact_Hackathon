@@ -1,0 +1,15 @@
+---
+description: UI motion guidance for Aceternity UI and animated components
+globs: {components,src/components}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# UI Motion
+
+- Use Aceternity UI, React Bits, and other animated components as foundations, not rigid templates.
+- Prefer motion that improves comprehension, focus, or hierarchy.
+- Keep animations subtle on trust-sensitive screens such as impact summaries and action guidance.
+- Avoid effects that make serious content feel sensationalized.
+- Preserve accessibility, keyboard use, and reduced-motion support.
+- Optimize for performance on typical laptops and mobile devices.
+- If an animation competes with readability, remove or simplify it.

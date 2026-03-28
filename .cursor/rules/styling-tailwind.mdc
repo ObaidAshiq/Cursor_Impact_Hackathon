@@ -1,0 +1,15 @@
+---
+description: Tailwind styling conventions for clear and maintainable UI
+globs: **/*.{ts,tsx,css}
+alwaysApply: false
+---
+
+# Styling With Tailwind
+
+- Use Tailwind as the default styling approach.
+- Prefer reusable patterns and utility composition over scattered one-off styling.
+- Keep spacing, typography, and color usage consistent across the app.
+- Optimize layouts for clarity, scanability, and information hierarchy.
+- Use visual emphasis to support severity, confidence, and actionability without overstating risk.
+- Avoid long unreadable class strings when extraction would improve maintenance.
+- Keep inline styles rare and limited to cases Tailwind cannot express cleanly.

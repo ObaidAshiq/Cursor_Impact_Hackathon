@@ -1,0 +1,16 @@
+---
+description: MVP event categories for the first impact engine version
+globs: {app,src/app,lib,src/lib}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# MVP Event Taxonomy
+
+- Keep the first version focused on three event categories:
+  - energy and fuel disruptions
+  - food and supply chain shocks
+  - economic and policy changes
+- Do not broaden the taxonomy until the core reasoning flow is reliable.
+- Model event inputs in a way that can map to sectors, regions, affected groups, and time horizon.
+- Prefer explicit domain labels over vague categories like "breaking news".
+- Build for later expansion, but optimize the MVP around depth in the approved categories.

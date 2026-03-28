@@ -1,0 +1,16 @@
+---
+description: React and TypeScript conventions
+globs: **/*.{ts,tsx}
+alwaysApply: false
+---
+
+# React And TypeScript
+
+- Use strict, explicit types for app data, event models, and API responses.
+- Avoid `any`; prefer `unknown`, discriminated unions, or well-named interfaces and types.
+- Keep component props typed and minimal.
+- Extract shared logic into custom hooks or domain utilities when reuse is real.
+- Prefer small focused components over large mixed-responsibility files.
+- Model product concepts clearly, such as event, source, impact, persona, recommendation, and confidence.
+- Keep naming consistent between frontend models and server/domain models.
+- Prefer pure transformation functions for mapping raw inputs into user-facing impact data.
