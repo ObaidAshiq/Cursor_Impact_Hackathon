@@ -9,3 +9,4 @@ export type {
   Persona,
   TimeHorizon,
 } from "./event";
+export type { UserNeedCard, UserNeedType, UserNeedUrgency } from "./user-need";

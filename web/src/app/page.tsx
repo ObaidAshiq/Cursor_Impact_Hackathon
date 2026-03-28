@@ -1,6 +1,7 @@
-import { EventCard } from "@/components/events/EventCard";
+import { UserNeedCard } from "@/components/events/UserNeedCard";
 import { FeedFilters } from "@/components/events/FeedFilters";
-import { listEventsForFeed } from "@/lib/events-feed";
+import { AmbientMesh } from "@/components/layout/AmbientMesh";
+import { listUserNeedsForFeed } from "@/lib/events-feed";
 import type { EventCategory, Persona } from "@/lib/domain";
 
 const categoryValues: (EventCategory | "all")[] = [
@@ -48,10 +49,11 @@ export default async function Home({ searchParams }: Props) {
   const region =
     typeof sp.region === "string" ? sp.region.toLowerCase() : "";
 
-  const { events, apifyError, liveFetchedAt, eiaError, geminiError } =
-    await listEventsForFeed({
+  const { needs, apifyError, liveFetchedAt, eiaError, geminiError } =
+    await listUserNeedsForFeed({
       category,
       persona,
+      region,
     });
 
   const listQuery = new URLSearchParams();
@@ -61,76 +63,82 @@ export default async function Home({ searchParams }: Props) {
   const listQueryString = listQuery.toString();
 
   return (
-    <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Events that may affect you
-        </h1>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-          The feed merges news from{" "}
-          <span className="font-medium text-zinc-800 dark:text-zinc-200">
-            Supabase
-          </span>{" "}
-          when configured (filled by the daily Apify sync job), otherwise a
-          direct{" "}
-          <span className="font-medium text-zinc-800 dark:text-zinc-200">
-            Apify
-          </span>{" "}
-          fetch, plus a{" "}
-          <span className="font-medium text-zinc-800 dark:text-zinc-200">
-            U.S. EIA
-          </span>{" "}
-          Brent spot snapshot when{" "}
-          <code className="rounded bg-zinc-200 px-1 text-xs dark:bg-zinc-800">
-            EIA_API_KEY
-          </code>{" "}
-          is set, and curated India-focused examples.
-        </p>
-        {liveFetchedAt ? (
-          <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">
-            Live snapshot: {new Date(liveFetchedAt).toLocaleString()}
+    <div className="flex flex-col gap-12">
+      <section className="relative overflow-hidden rounded-4xl border border-zinc-200/80 bg-zinc-50/50 px-5 py-9 sm:px-8 sm:py-11 dark:border-zinc-800/80 dark:bg-zinc-950/50">
+        <AmbientMesh />
+        <div className="relative z-10 flex flex-col gap-5">
+          <p className="hero-fade text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400">
+            Live feed
           </p>
-        ) : null}
-        {apifyError ? (
-          <p
-            className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-100"
-            role="status"
-          >
-            News feed unavailable ({apifyError}). Curated items still show
-            below.
+          <h1 className="hero-fade hero-fade-delay-1 text-balance text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+            What people like you may need to act on
+          </h1>
+          <p className="hero-fade hero-fade-delay-2 max-w-2xl text-pretty text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            We turn live signals from{" "}
+            <span className="font-medium text-zinc-800 dark:text-zinc-200">
+              Apify
+            </span>
+            , a{" "}
+            <span className="font-medium text-zinc-800 dark:text-zinc-200">
+              U.S. EIA
+            </span>
+            {" "}snapshot when{" "}
+            <code className="rounded-md bg-zinc-200/80 px-1.5 py-0.5 font-mono text-[11px] text-zinc-800 dark:bg-zinc-800/80 dark:text-zinc-200">
+              EIA_API_KEY
+            </code>{" "}
+            is set, and curated examples into persona-first need cards with urgency,
+            actions, and local context.
           </p>
-        ) : null}
-        {eiaError ? (
-          <p
-            className="mt-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-100"
-            role="status"
-          >
-            U.S. EIA petroleum snapshot unavailable ({eiaError}). Check
-            EIA_API_KEY and network.
-          </p>
-        ) : null}
-        {geminiError ? (
-          <p
-            className="mt-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-100"
-            role="status"
-          >
-            AI feedback unavailable for feed cards ({geminiError}). Event pages
-            still try to generate AI feedback first.
-          </p>
-        ) : null}
-      </div>
+          {liveFetchedAt ? (
+            <p className="hero-fade hero-fade-delay-2 text-xs text-zinc-500 dark:text-zinc-500">
+              Live snapshot: {new Date(liveFetchedAt).toLocaleString()}
+            </p>
+          ) : null}
+          {apifyError ? (
+            <p
+              className="hero-fade hero-fade-delay-3 rounded-xl border border-amber-200/90 bg-amber-50/90 px-4 py-3 text-sm text-amber-950 backdrop-blur-sm dark:border-amber-900/60 dark:bg-amber-950/35 dark:text-amber-100"
+              role="status"
+            >
+              News feed unavailable ({apifyError}). Curated items still show
+              below.
+            </p>
+          ) : null}
+          {eiaError ? (
+            <p
+              className="hero-fade hero-fade-delay-3 rounded-xl border border-amber-200/90 bg-amber-50/90 px-4 py-3 text-sm text-amber-950 backdrop-blur-sm dark:border-amber-900/60 dark:bg-amber-950/35 dark:text-amber-100"
+              role="status"
+            >
+              U.S. EIA petroleum snapshot unavailable ({eiaError}). Check
+              EIA_API_KEY and network.
+            </p>
+          ) : null}
+          {geminiError ? (
+            <p
+              className="hero-fade hero-fade-delay-3 rounded-xl border border-amber-200/90 bg-amber-50/90 px-4 py-3 text-sm text-amber-950 backdrop-blur-sm dark:border-amber-900/60 dark:bg-amber-950/35 dark:text-amber-100"
+              role="status"
+            >
+              AI feedback unavailable for feed cards ({geminiError}). Event
+              pages still try to generate AI feedback first.
+            </p>
+          ) : null}
+        </div>
+      </section>
 
       <FeedFilters category={category} persona={persona} region={region} />
 
-      {events.length === 0 ? (
+      {needs.length === 0 ? (
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          No events match these filters. Try &quot;All&quot; or another persona.
+          No user needs match these filters. Try another persona or broaden the category.
         </p>
       ) : (
         <ul className="flex flex-col gap-4">
-          {events.map((event) => (
-            <li key={event.slug}>
-              <EventCard event={event} query={listQueryString} />
+          {needs.map((need, i) => (
+            <li key={need.id}>
+              <UserNeedCard
+                need={need}
+                query={listQueryString}
+                enterIndex={i}
+              />
             </li>
           ))}
         </ul>

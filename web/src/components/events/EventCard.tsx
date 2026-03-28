@@ -12,13 +12,22 @@ const categoryLabel: Record<ImpactEvent["category"], string> = {
 type Props = {
   event: ImpactEvent;
   query?: string;
+  /** Stagger list entrance animation (ms multiplier). */
+  enterIndex?: number;
 };
 
-export function EventCard({ event, query = "" }: Props) {
+export function EventCard({ event, query = "", enterIndex }: Props) {
   const href = query ? `/event/${event.slug}?${query}` : `/event/${event.slug}`;
 
   return (
-    <article className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+    <article
+      className="event-card-enter rounded-2xl border border-zinc-200/90 bg-white/90 p-5 shadow-sm backdrop-blur-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800/90 dark:bg-zinc-950/80 dark:hover:border-zinc-600/90"
+      style={
+        enterIndex != null
+          ? { animationDelay: `${enterIndex * 48}ms` }
+          : undefined
+      }
+    >
       <div className="flex flex-wrap items-center gap-2">
         {event.provenance === "apify" ? (
           <span className="rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-900 dark:bg-orange-950 dark:text-orange-100">

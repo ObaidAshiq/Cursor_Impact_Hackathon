@@ -1,8 +1,32 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafafa;
+  --foreground: #0c0c0c;
+  --mesh-a: oklch(0.7 0.11 265);
+  --mesh-b: oklch(0.76 0.1 210);
+  --mesh-c: oklch(0.68 0.1 310);
+  --chip-bg: oklch(0.94 0.006 260);
+  --chip-fg: oklch(0.38 0.02 260);
+  --chip-border: oklch(0.86 0.01 260);
+  --chip-active-bg: oklch(0.12 0.02 260);
+  --chip-active-fg: oklch(0.98 0.004 260);
+  color-scheme: light;
+}
+
+.dark {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+  --mesh-a: oklch(0.48 0.16 265);
+  --mesh-b: oklch(0.52 0.14 210);
+  --mesh-c: oklch(0.45 0.14 310);
+  --chip-bg: oklch(0.2 0.015 260);
+  --chip-fg: oklch(0.72 0.02 260);
+  --chip-border: oklch(0.3 0.015 260);
+  --chip-active-bg: oklch(0.96 0.004 260);
+  --chip-active-fg: oklch(0.11 0.02 260);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -12,15 +36,151 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes mesh-drift-a {
+  0% {
+    transform: translate(0%, 0%) scale(1);
   }
+  33% {
+    transform: translate(6%, -8%) scale(1.08);
+  }
+  66% {
+    transform: translate(-4%, 5%) scale(0.95);
+  }
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+}
+
+@keyframes mesh-drift-b {
+  0% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  33% {
+    transform: translate(-7%, 6%) scale(1.06);
+  }
+  66% {
+    transform: translate(5%, -4%) scale(0.97);
+  }
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+}
+
+@keyframes mesh-drift-c {
+  0% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  33% {
+    transform: translate(4%, 7%) scale(1.05);
+  }
+  66% {
+    transform: translate(-6%, -3%) scale(1.02);
+  }
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-up-card {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mesh-orb-a {
+  background: radial-gradient(
+    ellipse at center,
+    var(--mesh-a) 0%,
+    transparent 72%
+  );
+  animation: mesh-drift-a 16s ease-in-out infinite;
+}
+
+.mesh-orb-b {
+  background: radial-gradient(
+    ellipse at center,
+    var(--mesh-b) 0%,
+    transparent 72%
+  );
+  animation: mesh-drift-b 20s ease-in-out infinite;
+}
+
+.mesh-orb-c {
+  background: radial-gradient(
+    ellipse at center,
+    var(--mesh-c) 0%,
+    transparent 72%
+  );
+  animation: mesh-drift-c 24s ease-in-out infinite;
+}
+
+.hero-fade {
+  animation: fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-fade-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.hero-fade-delay-2 {
+  animation-delay: 0.18s;
+}
+
+.hero-fade-delay-3 {
+  animation-delay: 0.26s;
+}
+
+.filter-chip {
+  background-color: var(--chip-bg);
+  color: var(--chip-fg);
+  border: 1px solid var(--chip-border);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.filter-chip:hover:not(.filter-chip--active) {
+  border-color: var(--foreground);
+  color: var(--foreground);
+  transform: translateY(-1px);
+}
+
+.filter-chip--active {
+  background-color: var(--chip-active-bg);
+  color: var(--chip-active-fg);
+  border-color: var(--chip-active-bg);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 0.04);
+}
+
+.dark .filter-chip--active {
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.event-card-enter {
+  animation: fade-up-card 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
 }

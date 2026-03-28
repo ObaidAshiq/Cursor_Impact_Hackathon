@@ -1,8 +1,8 @@
 {
   "crons": [
     {
-      "path": "/api/cron/sync-apify-news",
-      "schedule": "0 5 * * *"
+      "path": "/api/cron/ingest-events",
+      "schedule": "0 2 * * *"
     }
   ]
 }

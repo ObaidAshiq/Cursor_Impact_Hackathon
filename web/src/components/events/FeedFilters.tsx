@@ -53,9 +53,9 @@ function homeHref(next: Partial<Props>): string {
 
 export function FeedFilters({ category, persona, region }: Props) {
   return (
-    <div className="space-y-3">
+    <div className="space-y-5">
       <div>
-        <p className="mb-1.5 text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
           Category
         </p>
         <div className="flex flex-wrap gap-2">
@@ -63,10 +63,8 @@ export function FeedFilters({ category, persona, region }: Props) {
             <Link
               key={c.value}
               href={homeHref({ category: c.value, persona, region })}
-              className={`rounded-full px-3 py-1 text-xs font-medium ring-1 transition ${
-                category === c.value
-                  ? "bg-zinc-900 text-white ring-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 dark:ring-zinc-100"
-                  : "bg-white text-zinc-700 ring-zinc-200 hover:bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-300 dark:ring-zinc-700 dark:hover:bg-zinc-900"
+              className={`filter-chip rounded-full px-3.5 py-1.5 text-xs font-medium ${
+                category === c.value ? "filter-chip--active" : ""
               }`}
             >
               {c.label}
@@ -75,7 +73,7 @@ export function FeedFilters({ category, persona, region }: Props) {
         </div>
       </div>
       <div>
-        <p className="mb-1.5 text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
           Persona
         </p>
         <div className="flex flex-wrap gap-2">
@@ -83,10 +81,8 @@ export function FeedFilters({ category, persona, region }: Props) {
             <Link
               key={p.value}
               href={homeHref({ category, persona: p.value, region })}
-              className={`rounded-full px-3 py-1 text-xs font-medium ring-1 transition ${
-                persona === p.value
-                  ? "bg-zinc-900 text-white ring-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 dark:ring-zinc-100"
-                  : "bg-white text-zinc-700 ring-zinc-200 hover:bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-300 dark:ring-zinc-700 dark:hover:bg-zinc-900"
+              className={`filter-chip rounded-full px-3.5 py-1.5 text-xs font-medium ${
+                persona === p.value ? "filter-chip--active" : ""
               }`}
             >
               {p.label}
@@ -95,7 +91,7 @@ export function FeedFilters({ category, persona, region }: Props) {
         </div>
       </div>
       <div>
-        <p className="mb-1.5 text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
           Region
         </p>
         <div className="flex flex-wrap gap-2">
@@ -103,10 +99,8 @@ export function FeedFilters({ category, persona, region }: Props) {
             <Link
               key={r.value || "all"}
               href={homeHref({ category, persona, region: r.value })}
-              className={`rounded-full px-3 py-1 text-xs font-medium ring-1 transition ${
-                region === r.value
-                  ? "bg-zinc-900 text-white ring-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 dark:ring-zinc-100"
-                  : "bg-white text-zinc-700 ring-zinc-200 hover:bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-300 dark:ring-zinc-700 dark:hover:bg-zinc-900"
+              className={`filter-chip rounded-full px-3.5 py-1.5 text-xs font-medium ${
+                region === r.value ? "filter-chip--active" : ""
               }`}
             >
               {r.label}

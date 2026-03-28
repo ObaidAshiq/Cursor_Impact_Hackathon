@@ -1,0 +1,8 @@
+# Local Cursor MCP config may contain API tokens — never commit
+.cursor/mcp.json
+
+# Dependencies (install locally; do not commit)
+node_modules/
+
+# Cursor project skills / local IDE files
+web/.cursor/
