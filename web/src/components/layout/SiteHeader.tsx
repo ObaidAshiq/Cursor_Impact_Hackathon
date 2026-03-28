@@ -2,9 +2,9 @@ import Link from "next/link";
 import { auth } from "@/auth";
 import { signInWithGoogle, signOutAction } from "@/app/auth/actions";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import ImpactLogo from "../../../public/icons/ImpactLogo";
 
 const nav = [
-  { href: "/", label: "Feed" },
   { href: "/profile", label: "Profile" },
   { href: "/method", label: "Method" },
 ] as const;
@@ -17,8 +17,9 @@ export async function SiteHeader() {
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
         <Link
           href="/"
-          className="text-sm font-semibold tracking-tight text-zinc-900 transition-opacity hover:opacity-80 dark:text-zinc-50"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold tracking-tight text-zinc-900 transition-opacity hover:opacity-80 dark:text-zinc-50"
         >
+          <ImpactLogo className="w-5 h-5" />
           Impact Intelligence
         </Link>
         <div className="flex flex-wrap items-center gap-4 text-sm">
