@@ -5,6 +5,7 @@ A persona-first feed that turns live global signals into actionable need cards f
 Built for the [Cursor Impact Hackathon](https://cursor.com).
 
 **Live demo:** [impact-cursor-hackathon.vercel.app](https://impact-cursor-hackathon.vercel.app/)
+<img width="1200" height="750" alt="ImpactPreview" src="https://github.com/user-attachments/assets/08f52679-4a3a-433b-9bca-d5c07d6b743a" />
 
 ## What it does
 
