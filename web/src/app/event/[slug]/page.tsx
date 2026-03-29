@@ -5,20 +5,15 @@ import { CitationsPanel } from "@/components/citations/CitationsPanel";
 import { AiContentMarker } from "@/components/events/AiContentMarker";
 import { ConfidenceBadge } from "@/components/events/ConfidenceBadge";
 import type { Persona } from "@/lib/domain";
-import {
-  getStaticEventSlugs,
-  getUserNeedBySlugResolved,
-} from "@/lib/events-feed";
+import { getUserNeedBySlugResolved } from "@/lib/events-feed";
 import { mapImpactEventToUserNeeds, personaLabels, urgencyLabels } from "@/lib/user-needs";
+
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ slug: string }>;
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
-
-export function generateStaticParams() {
-  return getStaticEventSlugs().map((slug) => ({ slug }));
-}
 
 function parsePersona(value: string | undefined): Persona | undefined {
   if (
